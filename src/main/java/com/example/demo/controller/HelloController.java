@@ -1,26 +1,34 @@
 package com.example.demo.controller;
 
+import com.example.demo.service.impl.HelloService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/test")
 public class HelloController {
 
+    private final HelloService helloService;
+//    @Autowired
+//    private HelloService helloService;
+
     @GetMapping("/hi")
     public String hi() {
-        return "Hello World!";
+        return helloService.hi();
     }
 
     @Value("${app.login.password}")
     private String validPassword;
 
-    @PostMapping("/t01")
+    @PostMapping("/register")
+    public String register(@RequestParam String username, @RequestParam String password) {
+        return helloService.register(username, password);
+    }
+
+    @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password) {
-        if (password.equals(validPassword)) {
-            return "登录成功";
-        } else {
-            return "密码错误, 请联系系统管理员";
-        }
+        return helloService.login(username, password);
     }
 }
