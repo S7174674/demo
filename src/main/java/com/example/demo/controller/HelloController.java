@@ -28,7 +28,7 @@ public class HelloController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String username, @RequestParam String password) {
+    public String login(@RequestParam String username, @RequestParam(required = false, defaultValue = "111111") String password) {
         return helloService.login(username, password);
     }
 }
